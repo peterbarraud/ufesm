@@ -1,0 +1,23 @@
+<div class="login-container">
+  <div>
+    <h3>Login</h3>
+  </div>
+  <div>
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">User name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model='loginguser.email'>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model='loginguser.password'>
+      </div>
+      <p><a class="btn btn-lg btn-primary" ng-click='checkusercredentials()'>Login<span class="glyphicon glyphicon-log-in"></span></a></p>
+    </form>
+    <div class="text-danger">{{invalid_user_cred}}</div>
+    <!-- <p>Forgot your password? <a class="btn btn-xs btn-primary" data-toggle="modal" ng-click='openForgotLoginDialog()'>Email it<span class="glyphicon glyphicon-envelope"></span></a></p>
+    <p>Don't have a login? <a class="btn btn-xs btn-primary" data-toggle="modal" ng-click='openSignUpDialog()'>Sign up now<span class="glyphicon glyphicon-user"></span></a></p>
+    <forgot-login></forgot-login>
+    <sign-up></sign-up> -->
+  </div>
+</div>

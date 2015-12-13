@@ -1,0 +1,56 @@
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="login-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Sign up for a UFESM Login</h4>
+      </div>
+      <div class="modal-body">
+        <div class="" ng-show='signupdone'>
+          You have successfully created a login for UFESM. Close this dialog and sign in now.
+        </div>
+        <form ng-hide='signupdone'>
+          <div ng-class="isValidName ? 'form-group' : 'form-group has-error has-feedback'">
+            <label class="control-label" for="signUpName">Name</label>
+            <input type="text" class="form-control" id="signUpName" aria-describedby="inputError2Status" ng-model="signupuserdetails.name">
+            <span ng-show="!isValidName"  class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          </div>
+          <div ng-class="isValidEmail ? 'form-group' : 'form-group has-error has-feedback'">
+            <label class="control-label" for="signUpEmail">Email address</label>
+            <input type="email" class="form-control" id="signUpEmail" aria-describedby="inputError2Status" ng-model="signupuserdetails.email">
+            <span ng-show="!isValidEmail"  class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          </div>
+
+          <div ng-class="isValidPassword ? 'form-group' : 'form-group has-error has-feedback'">
+            <label class="control-label" for="signUpPassword">Password</label>
+            <input type="password" class="form-control" id="signUpPassword" aria-describedby="inputError2Status" ng-model="signupuserdetails.password">
+            <span ng-show="!isValidPassword"  class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          </div>
+
+          <div ng-class="isValidRePassword ? 'form-group' : 'form-group has-error has-feedback'">
+            <label class="control-label" for="reenterPassword">Reenter Password</label>
+            <input type="password" class="form-control" id="reenterPassword" aria-describedby="inputError2Status" ng-model="signupuserdetails.reenterpassword">
+            <span ng-show="!isValidRePassword"  class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          </div>
+
+          <div class="radio-inline">
+            <label>
+              <input type="radio" name="membersex" ng-model="signupuserdetails.sex" value='male'> Male
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label>
+              <input type="radio" name="membersex" ng-model="signupuserdetails.sex" value='female'> Female
+            </label>
+          </div>
+
+          <div class="text-danger">{{errorMessage}}</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn login-button" ng-click='signUp()' ng-hide='signupdone'>Sign up</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div>
+  <h4>Content pages</h4>
+  <div ng-repeat='pageitem in listofpages.pageitems.Items'>
+    <a href="" ng-click="showpage(pageitem.id,'pageitem')">{{pageitem.title}}</a>
+  </div>
+  <h4>Aggregate pages</h4>
+  <div ng-repeat='pageaggregate in listofpages.pageaggregates.Items'>
+    <a href="" ng-click="showpage(pageaggregate.id,'pageaggregate')">{{pageaggregate.title}}</a>
+  </div>
+</div>

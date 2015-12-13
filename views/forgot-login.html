@@ -1,0 +1,25 @@
+<div class="modal fade" id="forgotModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="login-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Forgot your password?</h4>
+        <p>Give us your email address and we'll resend your password</p>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div ng-class="errorMessage !== '' ? 'form-group has-error has-feedback' : 'form-group'">
+            <label class="control-label" for="forgotLogin">Email address</label>
+            <input type="email" class="form-control" id="forgotLogin" aria-describedby="inputError2Status" ng-model="forgotloginuserdetails.email">
+            <span ng-show="errorMessage !== ''"  class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          </div>
+          <div class="text-danger">{{errorMessage}}</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn login-button" ng-click='forgotLogin()'>Email it to me</button>
+      </div>
+    </div>
+  </div>
+</div>

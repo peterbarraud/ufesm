@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>UFESM - Admin UI</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="stylesheet" href="bower_components/ng-ckeditor/ng-ckeditor.css" /> -->
+
+    <!-- endbuild -->
+  </head>
+  <body ng-app="ufesmMembersOnlyApp" class=loginpage>
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+
+    <!-- top band - START -->
+    <div class="topband">
+      <div>
+        <img src="images/ufesm-emblem.png" alt="" />
+      </div>
+      <div>
+        <div><img src=''></div>
+        <div>
+          <div>
+            <div>United Front of Ex-Servicemen</div>
+            <div>G/F 128-H-2, Mohammad Pur, New Delhi - 110 066</div>
+          </div>
+          <div>
+            <img src='images/indian-army-emblem.png'>
+            <img src='images/indian-airforce-emblem.png'>
+            <img src='images/indian-navy-emblem.png'>
+          </div>
+        </div>
+        <div><img src=''></div>
+      </div>
+    </div>
+    <!-- top band - END -->
+
+    <div class="page-content" ng-view=""></div>
+
+
+
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/ng-ckeditor/ckeditor/ckeditor.js"></script>
+    <script src="bower_components/ng-ckeditor/ng-ckeditor.js"></script>
+
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/pagetickerctrl.js"></script>
+
+        <script src="scripts/services/serverFactory.js"></script>
+        <script src="scripts/services/util.js"></script>
+
+        <script src="scripts/directives/login.js"></script>
+        <script src="scripts/directives/forgotlogin.js"></script>
+        <script src="scripts/directives/signup.js"></script>
+        <script src="scripts/directives/pageticker.js"></script>
+        <script src="scripts/directives/pagetickeritem.js"></script>
+        <script src="scripts/directives/pagemanager.js"></script>
+        <script src="scripts/directives/pagemanagerhelp.js"></script>
+        <script src="scripts/directives/pagelist.js"></script>
+        <script src="scripts/directives/pagedetails.js"></script>
+        <script src="scripts/directives/pagemenu.js"></script>
+        <script src="scripts/directives/gallerymanager.js"></script>
+        <script src="scripts/directives/conversation.js"></script>
+        <script src="scripts/directives/onlineapplication.js"></script>
+        <script src="scripts/directives/myprofile.js"></script>
+        <script src="scripts/directives/navbar.js"></script>
+
+
+        <!-- endbuild -->
+</body>
+</html>

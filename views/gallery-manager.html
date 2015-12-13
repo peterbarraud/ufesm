@@ -1,0 +1,74 @@
+<div class=row>
+  <div class="col-xs-offset-1">
+    <h4>The pictures in the scroller below are the pictures in your gallery</h4>
+    <p>
+      These pictures are in the same sequence as which they appear in your gallery.
+      You can make changes to your gallery:
+      <ol>
+        <li>by adding a new picture before / after an existing picture</li>
+        <li>by removing an existing picture from the gallery</li>
+        <li>by moving an picture in the gallery either to the left or to the right</li>
+      </ol>
+    </p>
+    <p>
+      To make any changes to the to a picture, click on the picture in the scroller below
+    </p>
+    <h4 class="text-danger">
+      <strong>IMPORTANT</strong>: There is currently an issue with the Add feature.
+      If you add a picture to your gallery, the gallery is not immediately refreshed to show your changes.
+      You need to click on any picture in the gallery to refresh it.
+    </h4>
+    <ul style='margin: 20px 0px 0px -20px;padding: 0;white-space: nowrap;width: 100%;height:200px;overflow-x: auto;'>
+      <li style="display: inline;" ng-repeat="galleryimage in galleryimages">
+        <a href="" ng-click="getimagedetails(galleryimage.id)">
+        <img style='border:3px solid #696969;height:450;max-width:250px;margin-bottom:10px;'
+          ng-src="http://ufesm.in/images/{{galleryimage.name}}" alt="...">
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="galleryimageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Manage gallery pictures</h4>
+        </div>
+        <div class="modal-body">
+          <div ng-show="galleryupdatecomplete===true && showfileuploader===false" role="group" aria-label="...">
+            <h5>
+              Hover your mouse over each of the buttons below for a short description of their functionality
+            </h5>
+            <div class="row">
+              <div class="col-xs-8 col-xs-offset-2">
+                <button ng-click="addgallerypicture(selectedImageID)" type="button" class="btn btn-primary btn-xs" title='Add a gallery picture before (to the left) or after (to the right) of this picture'><span class="glyphicon glyphicon-plus"></span></button>
+                <button ng-click="remove(selectedImageID)" type="button" class="btn btn-danger btn-xs" title='Remove this picture from the gallery'><span class="glyphicon glyphicon-minus"></span></button>
+                <button ng-click="moveleft(selectedImageID)" type="button" class="btn btn-primary btn-xs" title='Move this picture to the left'><span class="glyphicon glyphicon-arrow-left"></span> </button>
+                <button ng-click="moveright(selectedImageID)" type="button" class="btn btn-primary btn-xs" title='Move this picture to the right'><span class="glyphicon glyphicon-arrow-right"></span> </button>
+              </div>
+            </div>
+          </div>
+          <img ng-show='galleryupdatecomplete===false' src="images/wait.gif" style="height:120px;" />
+          <div ng-show="galleryupdatecomplete===true && showfileuploader===true">
+            <form>
+              <div class="form-group">
+                <label for="uploadgallerypicture">Choose picture to upload</label>
+                <input type="file" id="uploadgallerypicture">
+                <p class="help-block">Choose a picture from your computer that you want to add to your gallery</p>
+              </div>
+              <div class="form-group">
+                <div class="" role="group" aria-label="...">
+                  <button type="button" class="btn btn-primary" ng-click="uploadthepicture('before')">Add before</button>
+                  <button type="button" class="btn btn-primary" ng-click="uploadthepicture('after')">Add after</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

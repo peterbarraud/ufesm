@@ -1,0 +1,47 @@
+@mixin menu-border-top() {
+  border-top: 1px solid $navbar-inverse-link-hover-color;
+}
+
+@mixin menu-border-bottom() {
+  border-bottom: 1px solid $navbar-inverse-link-hover-color;
+}
+
+@mixin page-title-style($font-size) {
+  font-size:$font-size;
+  color:$app-color-fg;
+  font-weight:bold;
+}
+@mixin container-center ($max-width) {
+  max-width: $max-width;
+  margin:0 auto;
+}
+@mixin app-font-style($font-size) {
+  font-size:$font-size;
+  font-weight: bold;
+  // font: $font-size 'Roboto Slab', serif;
+}
+@mixin ufesm-active($which-border) {
+  $which-border: solid;
+  border-width: 3px;
+  border-color: $navbar-inverse-link-hover-color;
+
+}
+
+@mixin menu-style {
+  font: bold 16px $app-font;
+  color: $navbar-inverse-color;
+}
+
+@mixin small-index-img {
+  width:40%;
+  border: 2px solid $app-color-fg;
+  @include border-top-radius(5px);
+  margin-right: 10px;
+  @extend .pull-left;
+}
+@mixin big-index-img {
+  @include border-top-radius(5px);
+  width:100%;
+  border: 2px solid $app-color-fg;
+  margin-bottom: 5px;
+}

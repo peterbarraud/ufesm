@@ -1,0 +1,111 @@
+<div>
+  <div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a ng-click="selectedTab = 'pagelist'" href='' aria-controls="home" role="tab" data-toggle="tab">Page view</a></li>
+      <li role="presentation"><a ng-click="selectedTab = 'sitemenu'" href='' aria-controls="profile" role="tab" data-toggle="tab">Site menu view</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" ng-show="selectedTab === 'pagelist'">
+        <h4>Content pages</h4>
+        <div ng-repeat='pageitem in listofpages.pageitem.Items'>
+          <a href="" ng-click="showpage(pageitem.id,'pageitem')">{{pageitem.title}}</a>
+        </div>
+        <h4>Aggregate pages</h4>
+        <div ng-repeat='pageaggregate in listofpages.pageaggregate.Items'>
+          <a href="" ng-click="showpage(pageaggregate.id,'pageaggregate')">{{pageaggregate.title}}</a>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane active" ng-show="selectedTab === 'sitemenu'">
+        <div style='margin-top:5px;'>
+          <div class="" ng-if="pagemenu.Items.length > 0">
+            <div ng-repeat="menuitem in pagemenu.Items" style="margin-left:{{menuitem.level*15}}px;margin-bottom:3px;">
+              <a ng-if="menuitem.level === '0'" style='font-size:16px;font-weight:bold;' ng-show="menuitem.pageid !== null" href="" ng-click="showpage(menuitem.pageid,menuitem.pagetype)">{{menuitem.title}}</a>
+              <span ng-if="menuitem.level === '0'" style='font-size:16px;font-weight:bold;' ng-show="menuitem.pageid === null">{{menuitem.title}}</span>
+              <a ng-if="menuitem.level === '1'" ng-show="menuitem.pageid !== null" href="" ng-click="showpage(menuitem.pageid,menuitem.pagetype)">{{menuitem.title}}</a>
+              <span ng-if="menuitem.level === '1'" ng-show="menuitem.pageid === null">{{menuitem.title}}</span>
+
+
+
+              <button title="Add a new title to the menu" type="button" class="btn btn-default" ng-click="additem(menuitem,'title','after')" ng-if="menuitem.level === '0'"><span class="glyphicon glyphicon-plus"></span><span style='font-size:12px;'>Title</span></button>
+              <button title="Add a new item to the above menu title"  type="button" class="btn btn-default" ng-click="additem(menuitem,'page','after')" ng-if="menuitem.level === '1' || (menuitem.level === '0' && menuitem.pageid === null)"><span class="glyphicon glyphicon-plus" ng-click="additem(menuitem,'page','after')"></span><span style='font-size:12px;'>Page</span></button>
+              <button type="button" class="btn btn-default" title='Delete this menu item' ng-if="pagemenu.Items.length > 1" ng-click="deletethisitem(menuitem.id)"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+          </div>
+          <div class="" ng-if="pagemenu.Items.length === 1" style="border:1px solid;padding:3px;margin-top:5px;">
+            <h5 class="text-danger"><strong>NOTE: </strong>You cannot delete the last title in the menu.</h5>
+            <ul>
+              <li>If you wish to delete this title, you need to first create another title.</li>
+              <li>If you do not want a menu in your website, please contact the Web administrator.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- list of pages to add menu item Modal -->
+  <div id="list-of-items-for-menu" class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Please select a page to add at the start of this title</h4>
+        </div>
+        <div class="modal-body">
+          <div ng-show="menuissaving">
+            <img src="images/wait.gif" width="100%" />
+          </div>
+          <form class="form-horizontal" style="overflow-y:scroll; height:300px;" ng-hide="menuissaving">
+            <div class="form-group form-group-sm" ng-if="menuitemdetails.additemtype === 'title'">
+              <div class="col-sm-offset-1 col-sm-11">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name=item-radio newItem="{{newmenutitle}}" newItemType="title"> <input type="text" class="form-control" placeholder="Menu title" ng-model="newmenutitle.title">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <h5>Content pages</h5>
+            <div ng-repeat='pageitem in listofpages.pageitem.Items'>
+              <div class="form-group form-group-sm">
+                <div class="col-sm-offset-1 col-sm-11">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name=item-radio newItem="{{pageitem}}" newItemType="pageitem"> <input type="text" class="form-control" placeholder="Menu title" ng-model="pageitem.title">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h5>Aggregate pages</h5>
+            <div ng-repeat='pageitem in listofpages.pageaggregate.Items'>
+              <div class="form-group form-group-sm">
+                <div class="col-sm-offset-1 col-sm-11">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name=item-radio newItem="{{pageitem}}" newItemType="pageaggregate"> <input type="text" class="form-control" placeholder="Menu title" ng-model="pageitem.title">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" ng-hide="menuissaving">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" ng-click="addthisitemtomenu()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Menu item Modal -->
+
+
+</div>

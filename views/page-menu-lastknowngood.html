@@ -1,0 +1,217 @@
+<div class="page-menu">
+
+  <div>
+    <button  ng-show='menu.length === 0' type="button" class="btn btn-primary" ng-click="opendialogtoaddtitle()">Add new menu title</button>
+    <!-- <button  ng-show='menu.length > 0' type="button" class="btn btn-primary" ng-click="save()">Save</button> -->
+  </div>
+  <table class="table">
+    <tr>
+      <td ng-repeat='item in menu'>
+        {{item.title}}
+        <button type='button' class='btn btn-primary btn-xs' ng-click="opendialogtoaddtitle(item.id)"
+          title='Add another menu title after this'>
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button ng-show='item.items.length === 0' type='button' class='btn btn-warning btn-xs' ng-click="opendialogtoadditemfortitle(item.id)"
+          title='Add a menu item at the start of this title'>
+          <span class='glyphicon glyphicon-plus'></span>
+        </button>
+
+        <button type="button" style='margin-bottom:2px' class="btn btn-primary btn-xs" ng-click="opencommandsdialog('menu-title-modal',item.id)"
+        title='Click this button to open the commands dialog for this menu title'>
+          ...
+        </button>
+        <div class="row" ng-repeat='item1 in item.items'>
+          <div style='margin:2px 0px 2px 0px'>
+            <span>{{item1.title}}</span>
+            <button type='button' class='btn btn-primary btn-xs' ng-click="opendialogtoadditem(item1.id)"
+            title='Add another menu item after this'>
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button type="button" class="btn btn-primary btn-xs" ng-click="opencommandsdialog('menu-item-modal',item1.id)"
+            title='Click this button to open the commands dialog for this menu item'>
+              ...
+            </button>
+          </div>
+
+
+      </div>
+      </td>
+    </tr>
+  </table>
+  <div >
+
+
+    <!-- Menu title Modal -->
+    <div id=menu-title-modal class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Click an action on selected menu title</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              Place your mouse cursor over the buttons below for details
+            </p>
+            <button type='button' class='btn btn-primary btn-xs' ng-click='delete()'
+            title='Remove this title from the menu'>
+              Remove
+            </button>
+            <button type='button' class='btn btn-primary btn-xs' ng-click='move("right")'
+            title='Move this menu title right'>
+              Move right
+            </button>
+            <button type='button' class='btn btn-primary btn-xs' ng-click='move("left")'
+            title='Move this menu title right'>
+              Move left
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Menu title Modal -->
+
+
+    <!-- Menu item Modal -->
+    <div id=menu-item-modal class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Click an action on selected menu item</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              Place your mouse cursor over the buttons below for details
+            </p>
+            <button type='button' class='btn btn-primary btn-xs' ng-click='delete()'
+            title='Remove this item from the menu'>
+              Remove
+            </button>
+            <button type='button' class='btn btn-primary btn-xs' ng-click='move("up")'
+            title='Move this menu item up'>
+              Move up
+            </button>
+            <button type='button' class='btn btn-primary btn-xs' ng-click='move("down")'
+            title='Move this menu item down'>
+              Move down
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Menu item Modal -->
+
+    <!-- list of pages to add to menu title Modal -->
+    <div id=list-of-pages-for-title class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Select a page to add after this title</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              You can either select a page to display at the top you can enter a title name
+            </p>
+            <form class="form-horizontal" style="overflow-y:scroll; height:300px;">
+              <div class="form-group form-group-sm">
+                <div class="col-sm-offset-1 col-sm-11">
+                  <div class="radio">
+                    <label>
+                      <input name='title-radio' type="radio"> <input type="text" class="form-control" placeholder="Menu title">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group form-group-sm" ng-repeat='page in listofpages'>
+                <div class="col-sm-offset-1 col-sm-11">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name='title-radio' > <input type="text" class="form-control" placeholder="Menu title" value="{{page.title}}" pagename="{{page.pagename}}">
+                      <span id="helpBlock" class="help-block" style='font-size:10px'>You can edit the name that should display in the menu</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="addmenutitle()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Menu item Modal -->
+
+    <!-- list of pages to add to menu item Modal -->
+    <div id=list-of-pages-for-menu class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Please select a page to add after this page</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" style="overflow-y:scroll; height:300px;">
+              <div class="form-group form-group-sm" ng-repeat='page in listofpages'>
+                <div class="col-sm-offset-1 col-sm-11">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name=item-radio> <input type="text" class="form-control" placeholder="Menu title" value="{{page.title}}" pagename="{{page.pagename}}" pageid="{{page.id}}">
+                      <span id="helpBlock" class="help-block" style='font-size:10px'>You can edit the name that should display in the menu</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="addmenuitem()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Menu item Modal -->
+
+    <!-- list of pages to add to first menu item Modal -->
+    <div id=list-of-pages-for-first-menu-in-title class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Please select a page to add at the start of this title</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" style="overflow-y:scroll; height:300px;">
+              <div class="form-group form-group-sm" ng-repeat='page in listofpages'>
+                <div class="col-sm-offset-1 col-sm-11">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name=item-radio> <input type="text" class="form-control" placeholder="Menu title" value="{{page.title}}" pagename="{{page.pagename}}" pageid="{{page.id}}">
+                      <span id="helpBlock" class="help-block" style='font-size:10px'>You can edit the name that should display in the menu</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="addmenuitematfirst()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Menu item Modal -->
+
+</div>

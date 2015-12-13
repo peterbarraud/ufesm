@@ -1,0 +1,41 @@
+<div class="">
+  <form class="form-inline">
+    <div class="form-group">
+      <input size=45 value={{tickeritem.currenttitle}} type="text" class="form-control" readonly ng-hide="ineditmode === 1">
+      <input size=50 ng-model=tickeritem.title type="text" class="form-control" ng-hide="ineditmode === 0">
+      <button class="btn btn-primary btn-xs" ng-hide="ineditmode === 1" type="button" ng-click='edit()' title='Make changes to this ticker item'><span class="glyphicon glyphicon-pencil"></span></button>
+      <button class="btn btn-primary btn-xs" ng-hide="ineditmode === 0" type="button" ng-click='save()' title='Save changes to this ticker item'><span class="glyphicon glyphicon-floppy-save"></span></button>
+      <button class="btn btn-danger btn-xs" ng-hide="ineditmode === 0" type="button" ng-click='undo()' title='Undo the changes to the ticker item'><span class="glyphicon glyphicon-remove"></span></button>
+      <button class="btn btn-primary btn-xs" ng-hide="ineditmode === 1" type="button" ng-click='addnew()' title='Add a ticker item below this'><span class="glyphicon glyphicon-plus"></span></button>
+      <button class="btn btn-danger btn-xs" ng-hide="ineditmode === 1" type="button" ng-click='remove()' title='Delete this ticker item'><span class="glyphicon glyphicon-minus"></span></button>
+      <button class="btn btn-success btn-xs" ng-hide="ineditmode === 1" type="button" ng-click='move("up")' title='Move this ticker item up'><span class="glyphicon glyphicon-arrow-up"></span></button>
+      <button class="btn btn-success btn-xs" ng-hide="ineditmode === 1" type="button" ng-click='move("down")' title='Move this ticker item down'><span class="glyphicon glyphicon-arrow-down"></span></button>
+    </div>
+    <!-- Modal -->
+  </form>
+  <div class="modal fade" id="addnewtickerModal" selectedItemPos=-1 tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Add new ticker item</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label>Ticker title</label>
+              <input type="text" ng-model=newitem.title class="form-control" placeholder="Ticker title">
+            </div>
+          </form>
+          <strong>Note:</strong> This ticker item will be added below the following item:<br/>
+          <span id='selectedItemTitle'></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="SaveTickerItem()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

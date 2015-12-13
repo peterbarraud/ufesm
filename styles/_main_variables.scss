@@ -1,0 +1,16 @@
+$app-color:                     rgb(224, 255, 255) !default;
+$app-color-fg:                  rgb(2, 31, 50) !default;
+$footer-table-cell-padding:     2px;
+$body-padding:                  0px;
+$nav-bar-color:                 rgb(2, 31, 41) !default;
+$navbar-inverse-border:         rgb(2, 31, 41) !default;
+$navbar-inverse-link-hover-color:  $app-color !default;
+$app-font:                      'Roboto Slab', serif;
+
+
+//navbar
+$navbar-height:                 35px;
+$navbar-margin-top:             2px;
+$navbar-margin-bottom:          2px;
+$navbar-inverse-bg:             $nav-bar-color;
+//navbar

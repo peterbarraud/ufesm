@@ -1,0 +1,218 @@
+<div>
+  <div role="group" aria-label="...">
+    <button type="button" ng-click='new()'>New</button>
+    <button type="button" ng-disabled='mode!=="edit" && mode!=="new"' ng-click='save()'>Save</button>
+    <button type="button" ng-disabled='mode==="readonly"' ng-click='publish()'>Publish</button>
+    <button type="button" ng-disabled='mode==="readonly"' ng-click='publishall()'>Publish All</button>
+    <button type="button" ng-disabled='mode==="readonly"' ng-click='unpublish()'>Unpublish</button>
+    <span ng-hide='mode==="help"' title="Click here to view the Help page" data-toggle="modal" data-target="#myModal"></span>
+  </div>
+  <div ng-show='mode==="readonly"'  class="container" style='width:80%;margin-top:10px;'>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>{{pagedetails.title}}</h3></div>
+      <div class="panel-body">
+        <p class="bg-danger">
+          <strong>You do not have permissions to make any changes to this page.</strong>
+        </p>
+        <p>
+          You can, however, work with this page in the site menu.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div ng-show='waiting'  class="container" style='width:80%;margin-top:10px;'>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Getting the page</h3></div>
+      <div class="panel-body">
+        <img src="images/wait.gif" alt="" />
+      </div>
+    </div>
+  </div>
+  <form name=frmpagedetails>
+    <!-- content page data collection -->
+    <div ng-show="pagedetails.pagetemplate[0].template === 'content' && mode!=='readonly'">
+      <div>
+        <label>Title</label>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-11">
+          <input type="text" class="form-control" ng-model='pagedetails.title' placeholder="Title of the page">
+        </div>
+      </div>
+      <div class="row">
+        <label>Story</label>
+      </div>
+      <div class="col-xs-12">
+        <textarea rows=1 storyckeditor="editorOptions" name=storyeditor ng-model="pagedetails.body"></textarea>
+        <!-- <textarea class="form-control" ng-model='pagedetails.body' rows="5" placeholder="Enter the page details"></textarea> -->
+      </div>
+    </div>
+    <!-- content page data collection -->
+
+    <!-- aggregate page data collection -->
+    <div ng-show="pagedetails.pagetemplate[0].template === 'aggregate' || pagedetails.pagetemplate[0].template === 'home'">
+      <div>
+        <label>Title</label>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-11">
+          <input type="text" class="form-control" ng-model='pagedetails.title' placeholder="Title of the page">
+        </div>
+      </div>
+      <div class="row">
+        <div class="row">
+          <div class="col-xs-6">
+            <h4 ng-if="!pagedetails.pageitem[0]">Choose a story</h4>
+            <h4 ng-if="pagedetails.pageitem[0]">{{pagedetails.pageitem[0].title}}</h4>
+            <button type="button" name=choosestory class="btn btn-primary btn-sm" ng-click="openchoosestorydialog(0)">Choose a<span ng-if="pagedetails.pageitem[0]">nother</span> story</button>
+          </div>
+          <div class="col-xs-6">
+            <h4 ng-if="!pagedetails.pageitem[1]")>Choose a story</h4>
+            <h4 ng-if="pagedetails.pageitem[1]">{{pagedetails.pageitem[1].title}}</h4>
+            <button type="button" class="btn btn-primary btn-sm" ng-click="openchoosestorydialog(1)">Choose a<span ng-if="pagedetails.pageitem[0]">nother</span> story</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <h4 ng-if="!pagedetails.pageitem[2]">Choose a story</h4>
+            <h4 ng-if="pagedetails.pageitem[2]">{{pagedetails.pageitem[2].title}}</h4>
+            <button type="button" name=choosestory class="btn btn-primary btn-sm" ng-click="openchoosestorydialog(2)">Choose a<span ng-if="pagedetails.pageitem[0]">nother</span> story</button>
+          </div>
+          <div class="col-xs-6">
+            <h4 ng-if="!pagedetails.pageitem[3]">Choose a story</h4>
+            <h4 ng-if="pagedetails.pageitem[3]">{{pagedetails.pageitem[3].title}}</h4>
+            <button type="button" class="btn btn-primary btn-sm" ng-click="openchoosestorydialog(3)">Choose a<span ng-if="pagedetails.pageitem[0]">nother</span> story</button>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-xs-6">
+            <h4 ng-if="!pagedetails.pageitem[4]">Choose a story</h4>
+            <h4 ng-if="pagedetails.pageitem[4]">{{pagedetails.pageitem[4].title}}</h4>
+            <button type="button" name=choosestory class="btn btn-primary btn-sm" ng-click="openchoosestorydialog(4)">Choose a<span ng-if="pagedetails.pageitem[0]">nother</span> story</button>
+          </div>
+          <div class="col-xs-6">
+            <h4 ng-if="!pagedetails.pageitem[5]">Choose a story</h4>
+            <h4 ng-if="pagedetails.pageitem[5]">{{pagedetails.pageitem[5].title}}</h4>
+            <button type="button" name=choosestory class="btn btn-primary btn-sm" ng-click="openchoosestorydialog(5)">Choose a<span ng-if="pagedetails.pageitem[0]">nother</span> story</button>            </div>
+        </div> -->
+      </div>
+    </div>
+    <!-- content page data collection -->
+
+  </form>
+
+  <div ng-show="mode==='help'">
+    <pagemanager-help></pagemanager-help>
+
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Page manager help</h4>
+        </div>
+        <div class="modal-body">
+          <pagemanager-help></pagemanager-help>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Status modal -->
+  <div class="modal fade bs-example-modal-sm" id="statusBox"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="statusBoxTitle"></h4>
+        </div>
+        <div class="modal-body">
+          <h5 id="statusBoxMessage" class="text-success"></h5>
+          <p id='warningMessage' class="text-danger">
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Status modal -->
+  <!-- Page templates modal -->
+  <div class="modal fade bs-example-modal-sm" id="pagetemplateModal"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="statusBoxTitle">Select a page template to use</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+              <table class="table">
+                <tr>
+                  <td>
+                    <label class="radio-inline" style='font-size:16px;font-weight:bold;'>
+                      <input type="radio" ng-checked="pagetemplates[0].pagetype === 'pageitem'" value="{{pagetemplates[0].id}}" pagetemplate={{pagetemplates[0]}} name="pagetemplatetype"> {{pagetemplates[0].title}}
+                    </label>
+                    <p class="bg-info" style='border:2px solid #008B8B;padding:3px;margin-top:10px'>{{pagetemplates[0].description}}</p>
+                  </td>
+                  <td>
+                    <label class="radio-inline" style='font-size:16px;font-weight:bold;'>
+                      <input type="radio" ng-checked="pagetemplates[1].pagetype === 'pageitem'" value="{{pagetemplates[1].id}}" pagetemplate={{pagetemplates[1]}} name="pagetemplatetype"> {{pagetemplates[1].title}}
+                    </label>
+                    <p class="bg-info" style='border:2px solid #008B8B;padding:3px;margin-top:10px'>{{pagetemplates[1].description}}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label class="radio-inline" style='font-size:16px;font-weight:bold;'>
+                      <input type="radio" ng-checked="pagetemplates[2].pagetype === 'pageitem'" value="{{pagetemplates[2].id}}" pagetemplate={{pagetemplates[2]}} name="pagetemplatetype"> {{pagetemplates[2].title}}
+                    </label>
+                    <p class="bg-info" style='border:2px solid #008B8B;padding:3px;margin-top:10px'>{{pagetemplates[2].description}}</p>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="usethistemplate()">Use this template</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Status modal -->
+  <!-- Content pages list modal -->
+  <div class="modal fade bs-example-modal-sm" id="contentpagelistModal"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Content pages</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tr ng-repeat="contentpage in contentpages">
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="addchosenpage(contentpage)">Use this</button> {{contentpage.title}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Status modal -->
+
+</div>

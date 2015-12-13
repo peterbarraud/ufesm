@@ -1,0 +1,79 @@
+<div class="page-ticker">
+  <div>
+    <table>
+      <tr ng-repeat="tickeritem in tickeritems">
+        <td>
+          <pageticker-item id='{{tickeritem.id}}' data='{{tickeritem}}'></pageticker-item>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">How to use this page</h2>
+      </div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr>
+            <td>
+              <button class="btn btn-primary btn-xs" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
+            </td>
+            <td>
+              Click Edit to make changes to the text of the ticker item
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="btn btn-primary btn-xs" type="button"><span class="glyphicon glyphicon-floppy-save"></span></button>
+            </td>
+            <td>
+              If you click Edit and make changes to the ticker, click Save to save these changes.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="btn btn-danger btn-xs" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+            </td>
+            <td>
+              If you click Edit and want to undo the changes to the ticker, click Undo to revert any changes and go back.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="btn btn-primary btn-xs" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+            </td>
+            <td>
+              Click Add to add a new ticker item below the current item
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="btn btn-danger btn-xs" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+            </td>
+            <td>
+              Click Remove to delete the current item
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="btn btn-success btn-xs" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+            </td>
+            <td>
+              Move up will change the order (before) in which the order will display on the site
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="btn btn-success btn-xs" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+            </td>
+            <td>
+              Move down will change the order (after) in which the order will display on the site
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

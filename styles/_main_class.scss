@@ -1,0 +1,49 @@
+//common class
+.page-ticker-readonly {
+  >form {
+    @extend .form-inline;
+    >div {
+      @extend .form-group;
+      >input {
+        @extend .form-control;
+      }
+    }
+    >button {
+      @extend .btn, .btn-xs;
+      // @extend .btn-primary;
+      >span {
+        @extend .glyphicon;
+      }
+    }
+    :nth-child(1) {
+      @extend .glyphicon-pencil;
+    }
+    :nth-child(2) {
+      @extend .glyphicon-floppy-disk;
+    }
+    :nth-child(3) {
+      @extend .glyphicon-remove;
+    }
+    :nth-child(4) {
+      @extend .glyphicon-arrow-up;
+    }
+    :nth-child(5) {
+      @extend .glyphicon-arrow-down;
+    }
+  }
+}
+.detailpagelist {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.childitems {
+  margin: 3px 0px 15px 0px;
+  >div {
+    margin-left: 15px;
+    margin-bottom: 3px;
+
+
+  }
+}

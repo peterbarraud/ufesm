@@ -1,0 +1,598 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// custom:variables
+@import "main_variables.scss";
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap/variables.scss";
+// custom:variables
+
+
+//custom mixins
+@import "main_mixins.scss";
+//custom mixins
+
+
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+//custom classes
+@import "main_class.scss";
+//custom classes
+
+
+//google fonts
+//TODO: uncomment the following line in production
+// @import url(https://fonts.googleapis.com/css?family=IM+Fell+Great+Primer+SC|Roboto+Slab);
+//google fonts
+
+.popover{
+  width:200px;
+}
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: $body-padding;
+  background-color: $app-color;
+  overflow-y: scroll;
+}
+
+.container-carousel {
+  @include container-center(80%);
+  padding-bottom: 10px;
+  img {
+    width: 100%;
+  }
+}
+
+.topband {
+  @include container-center(100%);
+  background-color: lighten($nav-bar-color,80%);
+  padding: 10px 0px 10px 30px;
+  >div:first-child {
+    @include container-center(150px);
+    >img {
+      border: 1px solid $app-color-fg;
+      height: 50px;
+      margin: 5px 0px 5px 0px;
+    }
+
+  }
+
+  >div:last-child {  //row div
+    @extend .row;
+    @include container-center(800px);
+    >div:nth-child(odd){  //right and left emblem-image (currenty hidden)
+      @include make-xs-column(3,0);
+      @include size(128px,100px);
+      >img {
+        height:100px;
+        visibility:hidden;
+      }
+    }
+    >div:nth-child(2){ //center title and fauji images that belong to the
+      @include make-xs-column(8,0);
+      @include size(510px,100px);
+      >div:first-child { //center title
+        >div:first-child {
+          color: $nav-bar-color;
+          margin-top: -10px;
+          font: bold 34px $app-font;
+        }
+        >div:last-child { //address
+          color: $nav-bar-color;
+          margin-top: -10px;
+          font: bold 12px $app-font;
+          padding-right: 10px;
+          text-align: right;
+        }
+
+
+      }
+      >div:last-child{ //fauji images block
+        @extend .col-xs-offset-3;
+        @include make-xs-column(6,0);
+        padding-left: 30px;
+        img { //each image
+          border: 1px solid $app-color-fg;
+          height:60px;
+          width: 50px;
+        }
+        img:nth-child(2) { //set the left and right margins around the center (2nd) img
+          margin: 0px 10px 0px 10px;
+        }
+      }
+    }
+  }
+}
+
+.nav-bar-container {
+  @include container-center(100%);  //set the page spread of the container
+  background-color: $nav-bar-color;
+  >div {  //set the page spread of the navbar within the container
+    @include container-center(800px);
+    >div {
+      @extend .navbar;
+      >ul {
+        @extend .nav, .navbar-nav;
+        >li{
+          a{  //menu styles
+            @include menu-style();
+          }
+          .active { //TODO: Why the heck does this not work??
+            background-color: rgb(255,255,255);
+          }
+        }
+        //the second and third menus are drop-downs
+        >li:nth-child(2), >li:nth-child(3){
+          @extend .dropdown;
+          span {
+            @extend .caret;
+          }
+          &:hover {
+            @include menu-border-top();
+            @extend .active;
+            > ul {
+                display: block;
+            }
+          }
+        }
+        ul {
+          @extend .dropdown-menu;
+          background-color: $nav-bar-color;
+          >li {
+            padding: 0px 10px 0px 10px;
+            >a:nth-child(n) {
+              // @include app-font-style(14px);
+              @include menu-style();
+              background-color: $nav-bar-color;
+              padding: 10px 15px 10px 15px;
+              &:hover {
+                color:$app-color-fg;
+                background-color: rgb(255,255,255);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.container-marquee {
+  @include container-center(100%);
+  span {  //all marquee spans
+    color: $app-color-fg;
+    font: bold 16px $app-font;
+    padding: 3px 0px 3px 0px;
+    border-right: 5px solid;
+    padding: 0px 15px 0px 10px;
+  }
+  span:last-child { //but make sure we dont have the border as separtor on the last span
+    border-style: none;
+  }
+}
+
+.left-side-menu {
+  list-style-type: none;
+  margin: 10px -30px;
+}
+.letter-container {
+  margin: 2px -5px 2px -5px;
+  padding: 5px;
+
+  border-bottom: 5px solid $app-color;
+
+}
+.page-content {
+  @include container-center(95%);
+	margin-top:0px;
+  background-color: rgb(255,255,255);
+  border: 1px solid $app-color-fg;
+  @include border-top-radius(5px);
+  @include border-bottom-radius(5px);
+	.text-justify {
+		text-align: justify;
+	}
+	.page-title {
+    @include page-title-style(24px);
+	}
+	.page-subtitle {
+    @include page-title-style(20px);
+	}
+	.page-subsubtitle {
+    @include page-title-style(18px);
+	}
+  .donate-panel {
+    @extend .panel, .panel-default;
+    .panel-title {
+      font: bold 24px $app-font;
+    }
+    @include panel-variant($app-color-fg, $navbar-inverse-color, $app-color-fg, $app-color-fg);
+    margin-top: 10px;
+    >div:first-child {
+      @extend .panel-heading;
+      h3 {
+        @extend .panel-title;
+      }
+    }
+    >div:last-child {
+      @extend .panel-body;
+    }
+    span {
+      font-size: 20px;
+      @extend .glyphicon, .glyphicon-download;
+    }
+  }
+  .index-col {
+    >div {
+      @extend .row;
+      margin: 20px 0px 20px 50px;
+      //put a border at the bottom of "all items" except the last
+      border-bottom: 1px solid $app-color-fg;
+      >div:first-child {  //title
+        font: bold 21px $app-font;
+      }
+      >img {
+        @include small-index-img();
+      }
+      >div {  //row
+        >div:last-child {
+          @extend .pull-right;
+        }
+      }
+      >div:last-child {
+        @extend .pull-right;
+        padding: 5px 0px 10px 0px;
+        >a {
+          @extend .btn, .btn-primary, .btn-xs;
+          >span {
+            @extend .glyphicon, .glyphicon-play;
+            font-size: 16px;
+          }
+        }
+      }
+      .big-index-img {
+        @include big-index-img();
+      }
+    }
+    >div:last-child { //put a border at the bottom of all items "except the last"
+      border-bottom-style: none;
+
+    }
+  }
+
+  .index-col-last {
+    //all children
+    >div {
+      @extend .row;
+      margin: 20px 20px 10px 10px;
+    }
+    >div:first-child {  //members' corner
+      @include border-top-radius(10px);
+      min-height: 400px;
+      border-bottom: 1px solid $app-color-fg;
+      padding: 10px;
+      border: 1px solid $app-color-fg;
+      >div:first-child {  //title
+        text-align: center;
+        text-decoration: underline;
+        font: bold 25px $app-font;
+        margin-bottom: 5px;
+      }
+      >div {  //anchor section
+        span {
+          @extend .glyphicon;
+          font-size: 10px;
+        }
+        >a {
+          font: bold 17px $app-font;
+          text-decoration: underline;
+          >span {
+            @extend .glyphicon-play;
+            margin-left: 3px;
+            color: $app-color-fg;
+          }
+        }
+        >span {
+          @extend .glyphicon-user;
+          margin-right: 5px;
+          border: 1px solid $app-color-fg;
+          @include border-top-radius(5px);
+          padding: 2px;
+        }
+
+      }
+
+    }
+    >div:not(:first-child) {
+      >div:first-child {  //title
+        font: bold 21px $app-font;
+      }
+      >img {
+        @include small-index-img();
+      }
+      >div:nth-child(3) {  //content
+        font-family: $app-font;
+      }
+      >div:last-child {
+        @extend .pull-right;
+        padding: 5px 0px 10px 0px;
+        >a {
+          @extend .btn, .btn-primary, .btn-xs;
+          >span {
+            @extend .glyphicon, .glyphicon-play;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+  .page-ticker {
+    @extend .row;
+    >div:first-child {
+      @extend .col-xs-6, .col-xs-offset-1;
+      >div {
+        @extend .row;
+        margin: 5px 0px 10px 0px;
+      }
+      >table {
+        @extend .table, .table-bordered;
+      }
+    }
+    >div:last-child {
+      @extend .col-xs-4;
+
+    }
+  }
+  .page-manager {
+    @extend .row;
+    margin-top: 10px;
+    >div:first-child {  //page-list.html
+      @extend .col-xs-4;
+      >div {  //list of pages
+        margin-bottom: 3px;
+        margin-left: 10px;
+        button {
+          @extend .btn, .btn-primary, .btn-xs;
+        }
+        a {
+          margin-right: 10px;
+        }
+
+        >div {
+          >button:nth-child(2) {
+            @extend .btn, .btn-default, .btn-xs;
+          }
+
+        }
+        a {
+          word-wrap:break-word;
+        }
+      }
+    }
+    >div:last-child { //page-details.html
+      @extend .col-xs-8;
+      padding-right: 20px;
+
+      >div {
+        >div {  //button group
+          >button {
+            @extend .btn, .btn-default;
+
+          }
+          >span {
+            @extend .pull-right, .glyphicon, .glyphicon-question-sign;
+            margin-right: 10px;
+            font-size: 28px;
+          }
+        }
+        >form {
+          @extend .form-horizontal;
+          margin-top: 5px;
+          margin-bottom: 10px;
+          >div:last-child {
+
+          }
+        }
+
+      }
+
+    }
+  }
+  .page-menu {
+    @extend .row;
+    margin: 10px 0px 0px 20px;
+    >div {  //each menu
+      @extend .col-xs-1;
+      >span {  //generic menu and menu item style
+      }
+      >div:first-child { //menu title
+      }
+      >div:not(first-child) { //menu item
+      }
+    }
+
+  }
+  .pay-of-a-soldier-page {
+    @extend .row;
+    >div:first-child {  //list column
+      @extend .col-xs-4;
+      margin: 10px;
+      >a {
+        @extend .list-group-item;
+        &:hover {
+          @extend .active;
+        }
+      }
+
+    }
+    >div:last-child {
+      @extend .col-xs-6;
+    }
+  }
+
+}
+.page-content-col {
+  border-right: 2px solid $app-color;
+  border-left: 2px solid $app-color;
+}
+.member-conversation {
+  @extend .page-content;
+  >div:first-child {
+    @extend .row;
+    >button:first-child {
+      @extend .btn, .btn-success, .pull-right;
+      margin: 5px 20px;
+      font: bold 28px $app-font;
+    }
+  }
+  #startNewConversationModal {
+    @extend .modal, .fade;
+    >div {
+      @extend .modal-dialog;  //TODO: not sure why this does not work??
+      >div {
+        @extend .modal-content;
+        >div:nth-child(1) { //modal-header
+          background-color: lighten($nav-bar-color,80%);
+          color:$app-color-fg;
+          @extend .modal-header;
+          >button{
+            @extend .close;
+          }
+          >h4 {
+            @extend .modal-title;
+            font-family: $app-font;
+          }
+        }
+        >div:nth-child(2) { //modal-body
+          @extend .modal-body;
+          >form {
+            >div {
+              @extend .form-group;
+              >label {
+                font: bold 18px
+              }
+              >textarea {
+                @extend .form-control;
+              }
+            }
+            >button {
+              @extend .btn, .btn-default, .btn-primary;
+            }
+          }
+        }
+        >div:nth-child(3) { //modal-footer
+          @extend .modal-footer;
+          background-color: lighten($nav-bar-color,80%);
+          color:$app-color-fg;
+          >button {
+            @extend .btn, .btn-default, .btn-warning;
+          }
+        }
+      }
+    }
+
+
+  }
+}
+.login-container {
+  @include container-center(40%);
+  @extend .panel, .panel-default;
+  margin-bottom: 10px;
+  .panel-title {
+    font: bold 24px $app-font;
+  }
+  @include panel-variant($app-color-fg, $navbar-inverse-color, $app-color-fg, $app-color-fg);
+  margin-top: 10px;
+  >div:first-child {
+    @extend .panel-heading;
+    h3 {
+      @extend .panel-title;
+    }
+  }
+  >div:last-child {
+    @extend .panel-body;
+  }
+
+}
+.contactus {
+  border: 3px solid $app-color-fg;
+  @include border-top-radius(5px);
+  @include border-bottom-radius(5px);
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+  //any span within the contact us form (this works for descendants at any level below the current class)
+  >div{
+    font-size:26px;
+    color:$app-color-fg;
+    border-bottom: 4px solid $app-color-fg;
+    margin-bottom: 5px;
+  }
+  >form {
+    >div {
+      font-size:16px;
+      color:$app-color-fg;
+    }
+    span {
+      color: #e80a0a;
+      font-size:20px;
+    }
+    label {
+      color:$app-color-fg;
+      font-weight:bold;
+    }
+  }
+}
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
+.footer-container {
+  @include container-center(80%);
+  >div:first-child{
+    @include make-xs-column(4,0);
+    >div:first-child {
+      font: bold 21px $app-font;
+    }
+    >div {
+      font: bold 16px $app-font;
+    }
+  }
+  >div:last-child{
+    // @extend .col-xs-9;
+    @include make-xs-column(8,0);
+    >table {
+    	@extend .table, .borderless;	//courtesy: http://stackoverflow.com/questions/11787330/is-it-possible-in-sass-to-inherit-from-a-class-in-another-file
+      color: $navbar-inverse-color;
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr {
+          > th,
+          > td {
+            padding: $footer-table-cell-padding 0px $footer-table-cell-padding 0px ;
+            color: $navbar-inverse-color;
+            line-height: $line-height-base;
+            > a {
+              color: $navbar-inverse-color;
+              font-weight: bolder;
+              font-size: 14px;
+              text-decoration: underline;
+            }
+            >a:hover {
+              color: rgb(255, 153, 51);
+            }
+            >span {
+              color: $navbar-inverse-color;
+              font-weight: bolder;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

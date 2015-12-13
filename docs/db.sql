@@ -16,6 +16,48 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `abc`
+--
+
+DROP TABLE IF EXISTS `abc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `abc` (
+  `a` varchar(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `abc`
+--
+
+LOCK TABLES `abc` WRITE;
+/*!40000 ALTER TABLE `abc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `abc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `abc1`
+--
+
+DROP TABLE IF EXISTS `abc1`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `abc1` (
+  `a` varchar(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `abc1`
+--
+
+LOCK TABLES `abc1` WRITE;
+/*!40000 ALTER TABLE `abc1` DISABLE KEYS */;
+/*!40000 ALTER TABLE `abc1` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `appsection`
 --
 
@@ -233,8 +275,12 @@ CREATE TABLE `menuitem` (
   `position` tinyint(2) NOT NULL,
   `level` tinyint(1) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
+  `pagetype` varchar(50) NOT NULL,
+  `pagename` varchar(256) DEFAULT NULL,
+  `pageid` tinyint(3) DEFAULT NULL,
+  `parentid` tinyint(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,115 +289,38 @@ CREATE TABLE `menuitem` (
 
 LOCK TABLES `menuitem` WRITE;
 /*!40000 ALTER TABLE `menuitem` DISABLE KEYS */;
+INSERT INTO `menuitem` VALUES (14,4,0,'t6','title',NULL,NULL,NULL),(16,6,1,'adfasdf','pageitem','adfasdf.php',6,14),(17,5,1,'anon','pageitem','anon.php',15,14),(18,7,1,'arthurd page','pageitem','arthurd-page.php',18,14),(19,8,1,'ll - put some more herepp','pageaggregate','ll---put-some-more-herepp.php',19,14),(20,9,0,'contact us','pageitem','adfasdf.php',6,NULL),(21,1,0,'Home','pageitem','anon.php',15,NULL),(22,2,0,'t5','title',NULL,NULL,NULL),(23,3,1,'arthurd page','pageitem','arthurd-page.php',18,22);
 /*!40000 ALTER TABLE `menuitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `menuitem_map_pageaggregate`
+-- Table structure for table `menuitem_backup`
 --
 
-DROP TABLE IF EXISTS `menuitem_map_pageaggregate`;
+DROP TABLE IF EXISTS `menuitem_backup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `menuitem_map_pageaggregate` (
-  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
-  `menuitemid` tinyint(2) unsigned NOT NULL,
-  `pageaggregateid` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `menuitemid` (`menuitemid`),
-  KEY `pageaggregateid` (`pageaggregateid`),
-  CONSTRAINT `menuitem_map_pageaggregate_ibfk_1` FOREIGN KEY (`menuitemid`) REFERENCES `menuitem` (`id`),
-  CONSTRAINT `menuitem_map_pageaggregate_ibfk_2` FOREIGN KEY (`pageaggregateid`) REFERENCES `pageaggregate` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `menuitem_map_pageaggregate`
---
-
-LOCK TABLES `menuitem_map_pageaggregate` WRITE;
-/*!40000 ALTER TABLE `menuitem_map_pageaggregate` DISABLE KEYS */;
-/*!40000 ALTER TABLE `menuitem_map_pageaggregate` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `menuitem_map_pageitem`
---
-
-DROP TABLE IF EXISTS `menuitem_map_pageitem`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `menuitem_map_pageitem` (
-  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
-  `menuitemid` tinyint(2) unsigned NOT NULL,
-  `pageitemid` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `menuitemid` (`menuitemid`),
-  KEY `pageitemid` (`pageitemid`),
-  CONSTRAINT `menuitem_map_pageitem_ibfk_1` FOREIGN KEY (`menuitemid`) REFERENCES `menuitem` (`id`),
-  CONSTRAINT `menuitem_map_pageitem_ibfk_2` FOREIGN KEY (`pageitemid`) REFERENCES `pageitem` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `menuitem_map_pageitem`
---
-
-LOCK TABLES `menuitem_map_pageitem` WRITE;
-/*!40000 ALTER TABLE `menuitem_map_pageitem` DISABLE KEYS */;
-/*!40000 ALTER TABLE `menuitem_map_pageitem` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `menutitle`
---
-
-DROP TABLE IF EXISTS `menutitle`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `menutitle` (
+CREATE TABLE `menuitem_backup` (
   `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
   `position` tinyint(2) NOT NULL,
+  `level` tinyint(1) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
+  `pagetype` varchar(50) NOT NULL,
+  `pagename` varchar(256) DEFAULT NULL,
+  `pageid` tinyint(3) DEFAULT NULL,
+  `parentid` tinyint(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `menutitle`
+-- Dumping data for table `menuitem_backup`
 --
 
-LOCK TABLES `menutitle` WRITE;
-/*!40000 ALTER TABLE `menutitle` DISABLE KEYS */;
-/*!40000 ALTER TABLE `menutitle` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `menutitle_map_menuitem`
---
-
-DROP TABLE IF EXISTS `menutitle_map_menuitem`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `menutitle_map_menuitem` (
-  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
-  `menutitleid` tinyint(2) unsigned NOT NULL,
-  `menuitemid` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `menutitleid` (`menutitleid`),
-  KEY `menuitemid` (`menuitemid`),
-  CONSTRAINT `menutitle_map_menuitem_ibfk_1` FOREIGN KEY (`menutitleid`) REFERENCES `menutitle` (`id`),
-  CONSTRAINT `menutitle_map_menuitem_ibfk_2` FOREIGN KEY (`menuitemid`) REFERENCES `menuitem` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `menutitle_map_menuitem`
---
-
-LOCK TABLES `menutitle_map_menuitem` WRITE;
-/*!40000 ALTER TABLE `menutitle_map_menuitem` DISABLE KEYS */;
-/*!40000 ALTER TABLE `menutitle_map_menuitem` ENABLE KEYS */;
+LOCK TABLES `menuitem_backup` WRITE;
+/*!40000 ALTER TABLE `menuitem_backup` DISABLE KEYS */;
+INSERT INTO `menuitem_backup` VALUES (1,4,0,'Home','pageitem','anon.php',15,NULL),(2,1,0,'t1','title',NULL,NULL,NULL),(3,2,1,'anon','pageitem','anon.php',15,2),(4,3,1,'arthurd page','pageitem','arthurd-page.php',18,2);
+/*!40000 ALTER TABLE `menuitem_backup` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -619,4 +588,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-11  8:15:39
+-- Dump completed on 2015-12-13 21:44:52

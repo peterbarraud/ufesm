@@ -64,7 +64,6 @@
 	});
 
 
-
 	//picture gallery APIs
 	$app->get('/getgallerydata/',function() {
 		require_once 'dataobjectserver/application.php';
@@ -213,6 +212,17 @@
 		allow_cross_domain_calls();
 		echo json_encode($itemdetails);
 	});
+	$app->post('/executesqlquery/',function() use ($app) {
+		require_once 'dataobjectserver/application.php';
+		$application = Application::getinstance();
+		//cast the json object to a well formed php object based on the data object model
+		$sqlquery = $app->request->post('sqlquery');
+		$object = $application->GetObjectById('menuitem',-1,0);
+		$result = $object->ExecuteSQLQuery($sqlquery);
+		allow_cross_domain_calls();
+		echo json_encode($result);
+	});
+
 
 	$app->post('/savemenuitem/:selectedItemID/',function($selectedItemID) use ($app) {
 		require_once 'dataobjectserver/application.php';

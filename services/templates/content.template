@@ -51,7 +51,6 @@ $mysqli = new mysqli(trim($json['dbserver']),trim($json['dbuser']),trim($json['d
         <div role="navigation"><!--nav bar - START -->
           <ul>
             <?php
-            <?php
             if ($result = $mysqli->query('select id,position,level,title,pagename,parentid from menuitem order by position;')) {
               $menutitles = array();
               while ($row = $result->fetch_assoc()) {
@@ -89,7 +88,6 @@ $mysqli = new mysqli(trim($json['dbserver']),trim($json['dbuser']),trim($json['d
                 }
               }
             }
-            ?>
             ?>
           </ul>
         </div>

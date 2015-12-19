@@ -215,6 +215,24 @@ class DataLayer {
     $result = $this->conn->query($delete_sql);
   }
 
+  public function ExecuteQuery($query){
+    $query = str_replace('"','',$query);
+    $query = str_replace('\n','',$query);
+    $retval = array();
+    if ($result = $this->conn->query($query)){
+      if (gettype($result) == 'object'){
+        while ($row = $result->fetch_assoc()) {
+          array_push($retval,$row);
+        }
+      }
+      else {
+        $retval['affectedrows'] = 'rows updated';
+
+      }
+    }
+    return $retval;
+  }
+
   private static function fieldisnotnumeric($fieldinfo) {
 	  return $fieldinfo->type != 1 && $fieldinfo->type != 2 && $fieldinfo->type != 3 &&
 				$fieldinfo->type != 4 && $fieldinfo->type != 5 && $fieldinfo->type != 8 &&

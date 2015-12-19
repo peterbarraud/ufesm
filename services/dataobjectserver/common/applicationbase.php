@@ -1,4 +1,4 @@
-<?php  
+<?php
 class applicationbase {
 
 	public function __toString() {
@@ -8,7 +8,7 @@ class applicationbase {
 			$print_val = $value;
 			if (isset($print_val)) {
 				$print_val = is_array ($value) ? sizeof($value) : $value;
-			
+
 			}
 			else {
 				$print_val = 'NULL';
@@ -26,7 +26,7 @@ class applicationbase {
 
 
 
-  
+
 
 
 ?>

@@ -18,14 +18,6 @@ angular
         template: '<log-in></log-in>',
         controller: 'loginCtrl'
       })
-      .when('/conversation', {
-        template: '<nav-bar></nav-bar><member-conversation></member-conversation>'
-        // controller: 'conversationCtrl'
-      })
-      .when('/onlineapplication', {
-        template: '<nav-bar></nav-bar><online-application></online-application>'
-        // controller: 'conversationCtrl'
-      })
       .when('/pageticker', {
         template: '<nav-bar></nav-bar><page-ticker></page-ticker>'
         // controller: 'conversationCtrl'
@@ -42,8 +34,8 @@ angular
         template: '<nav-bar></nav-bar><gallery-manager></gallery-manager>'
         // controller: 'conversationCtrl'
       })
-      .when('/myprofile', {
-        template: '<nav-bar></nav-bar><my-profile></my-profile>'
+      .when('/dbmanager', {
+        template: '<nav-bar></nav-bar><db-manager></db-manager>'
         // controller: 'conversationCtrl'
       })
       .otherwise({

@@ -43,6 +43,7 @@ angular.module('ufesmMembersOnlyApp')
           scope.invalid_user_cred = data.error;
         });
     },
+
     //we are going to use scope callbacks to handle multiple directive calls to identical factory methods
     //the specific directive functionality should be handled in the directive itselt. not in the factory. (mostly thanks to Ed Seckler)
     getitem : function(itemid,itemtype,scope,callback) {
@@ -226,7 +227,6 @@ angular.module('ufesmMembersOnlyApp')
     },
 
     saveitemdetails : function(scope,itemDetails,itemtype) {
-      console.log(JSON.stringify(itemDetails));
       var paramsObject = {itemObject:JSON.stringify(itemDetails)};
       var httpPostParams = [];
       for (var key in paramsObject) {
@@ -246,6 +246,28 @@ angular.module('ufesmMembersOnlyApp')
         console.log(data);
       });
     },
+
+    executesqlquery : function(scope) {
+      var paramsObject = {sqlquery:JSON.stringify(scope.dbquery.query)};
+      var httpPostParams = [];
+      for (var key in paramsObject) {
+        httpPostParams.push(key + '=' + encodeURIComponent(paramsObject[key]));
+      }
+      httpPostParams = httpPostParams.join('&');
+      $http({
+        method: 'POST',
+        url: util.restAPIURL($location) + 'rest.api.php/executesqlquery/',
+        data: httpPostParams,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).
+      success(function(data, status, headers, config) {
+        scope.handlequeryresult (data);
+      }).
+      error(function(data, status, headers, config) {
+        console.log(data);
+      });
+    },
+
 
     savemenuitem : function(scope) {
       var paramsObject = {itemObject:JSON.stringify(scope.newmenutitle)};

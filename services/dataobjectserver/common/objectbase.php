@@ -36,6 +36,21 @@ class objectbase extends applicationbase {
 	  }
 	  $datalayer->CloseConnection();
 	}
+	// convenience SQL method that can be called on any object
+	public function ExecuteSQLQuery($quey){
+		$datalayer = new DataLayer();
+	  $datalayer->OpenConnection();
+		$retval = null;
+	  try {
+		  $retval = $datalayer->ExecuteQuery($quey);
+	  }
+	  catch (Exception $e) {
+		  $this->ServerErr = $e->getMessage();
+		  $this->ServerErrNo = $e->getCode();
+	  }
+	  $datalayer->CloseConnection();
+		return $retval;
+	}
 	public function __toString() {
 		$retval = '';
 		$object_vars = get_object_vars ($this);
@@ -52,6 +67,7 @@ class objectbase extends applicationbase {
 		}
 		return $retval;
 	}
+
 	public $ServerErr = '';
 	public $ServerErrNo = 0;
 	public $ServerErrType = '';

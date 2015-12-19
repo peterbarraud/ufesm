@@ -7,7 +7,7 @@ class pageaggregate extends pagebase {
     for ($i=0;$i<4;$i++){
       $pos = $i+1;
       $file_contents = str_replace('[[story-'. $pos . '-title]]',$this->pageitem[$i]->title,$file_contents);
-      $file_contents = str_replace('[[story-'. $pos . '-content]]',$this->pageitem[$i]->body,$file_contents);
+      $file_contents = str_replace('[[story-'. $pos . '-content]]',$this->pageitem[$i]->subtitle,$file_contents);
       $file_contents = str_replace('[[story-'. $pos . '-pagename]]',$this->pageitem[$i]->pagename,$file_contents);
 
     }

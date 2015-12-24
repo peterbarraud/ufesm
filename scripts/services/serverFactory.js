@@ -216,17 +216,18 @@ angular.module('ufesmMembersOnlyApp')
           console.log(data);
         });
     },
+    // how about a getitemsbyattr to get a generic sorted list
     getitemsbydate : function(scope,itemtype,callback) {
       $http.get(util.restAPIURL($location) + 'rest.api.php/getitemsbydate/' + itemtype).
         success(function(data, status, headers, config) {
-      scope[callback](data);
+          scope[callback](data);
         }).
         error(function(data, status, headers, config) {
           console.log(data);
         });
     },
 
-    saveitemdetails : function(scope,itemDetails,itemtype) {
+    saveitemdetails : function(scope,itemDetails,itemtype,callback) {
       var paramsObject = {itemObject:JSON.stringify(itemDetails)};
       var httpPostParams = [];
       for (var key in paramsObject) {
@@ -240,7 +241,13 @@ angular.module('ufesmMembersOnlyApp')
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).
       success(function(data, status, headers, config) {
-        scope.managesaveitem (data);
+        // actually the callback should not be predefined. but we're keeping this hack here for legacy
+        if (angular.isDefined(callback)) {
+          scope[callback](data);
+        }
+        else {
+          scope.managesaveitem (data);          
+        }
       }).
       error(function(data, status, headers, config) {
         console.log(data);

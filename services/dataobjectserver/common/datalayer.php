@@ -133,34 +133,47 @@ class DataLayer {
     $select_sql = 'select * from ' . $this_table_name . ' where id = ' . $id;
     if ($result = $this->conn->query($select_sql)) {
       $columns = array();
+
   		while ($fieldinfo = $result->fetch_field()) {
-  			array_push($columns, $fieldinfo);
+        // since the id field is an auto_increment field, we will not include that in the insert update statement
+        if ($fieldinfo->name != 'id') {
+          array_push($columns, $fieldinfo);
+        }
   		}
-  		$insert_update_on_duplicate = 'insert into ' . $this_table_name . '(';
-  		for ($i=0;$i<sizeof($columns);$i++) {
-  			$insert_update_on_duplicate .=  $columns[$i]->name;
-  			if ($i < sizeof($columns) - 1) {
-  				$insert_update_on_duplicate .= ',';
-  			}
-  		}
-  		$insert_update_on_duplicate .= ')';
-  		$insert_update_on_duplicate .= ' values(';
-  		for ($i=0;$i<sizeof($columns);$i++) {
-  			$insert_update_on_duplicate .= DataLayer::prettifydatavalue($object->{$columns[$i]->name},$columns[$i]);
-  			if ($i < sizeof($columns) - 1) {
-  				$insert_update_on_duplicate .= ',';
-  			}
-  		}
-      $insert_update_on_duplicate .= ')';
-  		$insert_update_on_duplicate .= ' on duplicate key update ';
-  		for ($i=0;$i<sizeof($columns);$i++) {
-  			$insert_update_on_duplicate .= $columns[$i]->name . ' = ' . DataLayer::prettifydatavalue($object->{$columns[$i]->name},$columns[$i]);
-  			if ($i < sizeof($columns) - 1) {
-  				$insert_update_on_duplicate .= ',';
-  			}
-  		}
-  		$insert_update_on_duplicate .= ';';
-  		if ($this->conn->query($insert_update_on_duplicate)) {
+      // we are going to split the insert and update statements
+      // we found out that a single insert update on duplicate is quite pretty but has one major drawback
+      // IT DOES NOT REPORT unique key contriant breaks
+      $execute_query = '';
+      if ($id == 'null') {  // insert
+        $execute_query = 'insert into ' . $this_table_name . '(';
+    		for ($i=0;$i<sizeof($columns);$i++) {
+    			$execute_query .=  $columns[$i]->name;
+    			if ($i < sizeof($columns) - 1) {
+    				$execute_query .= ',';
+    			}
+    		}
+    		$execute_query .= ')';
+    		$execute_query .= ' values(';
+    		for ($i=0;$i<sizeof($columns);$i++) {
+    			$execute_query .= DataLayer::prettifydatavalue($object->{$columns[$i]->name},$columns[$i]);
+    			if ($i < sizeof($columns) - 1) {
+    				$execute_query .= ',';
+    			}
+    		}
+        $execute_query .= ');';
+      }
+      else {
+        $execute_query = 'update ' . $this_table_name . ' set ';
+        for ($i=0;$i<sizeof($columns);$i++) {
+    			$execute_query .= $columns[$i]->name . ' = ' . DataLayer::prettifydatavalue($object->{$columns[$i]->name},$columns[$i]);
+    			if ($i < sizeof($columns) - 1) {
+    				$execute_query .= ',';
+    			}
+    		}
+
+        $execute_query .= ' where id = ' . $id;
+      }
+  		if ($this->conn->query($execute_query)) {
   			$object->id = $this->conn->insert_id == 0 ? $object->id : $this->conn->insert_id;
   		}
   		else {
@@ -169,6 +182,7 @@ class DataLayer {
       if ($setRelatedObjects == 1) {
         $this->setRelatedObjectCollections($object);
       }
+
 	}
 }
 

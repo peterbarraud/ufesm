@@ -206,12 +206,25 @@
 	$app->post('/saveitem/:itemtype/',function($itemtype) use ($app) {
 		require_once 'dataobjectserver/application.php';
 		$application = Application::getinstance();
+		// $logger = new Logger('saveitem');
+		// $logger->AppendLine($app->request->post('itemObject'));
+		// $logger->AppendLine($itemtype);
 		//cast the json object to a well formed php object based on the data object model
 		$itemdetails = $application->GetObjectForJSON(json_decode($app->request->post('itemObject')),$itemtype);
 		$itemdetails->Save();
 		allow_cross_domain_calls();
 		echo json_encode($itemdetails);
 	});
+	$app->get('/testsave/',function() {
+		$saveitemdetails = '{"ServerErr":"","ServerErrNo":0,"ServerErrType":"","id":"20","title":"abcde","subtitle":"efdddd\n","body":"<p>efddddkkkk</p>\n\n<p>sss</p>\n","titleimage":null,"publishdate":null,"pagename":"abcde.php","createdate":"2015-12-23 08:32:45","modifieddate":"2015-12-23 08:35:50","readonly":null,"pageaggregate":[],"pageitem":[],"pagetemplate":[{"ServerErr":"","ServerErrNo":0,"ServerErrType":"","id":"2","pagetype":"pageitem","description":"Use this template to create detail page that have content such as body text, images etc","title":"Content page","template":"content"}],"tag":[]}';
+		$itemtype = 'pageitem';
+		require_once 'dataobjectserver/application.php';
+		$application = Application::getinstance();
+		$itemdetails = $application->GetObjectForJSON(json_decode($saveitemdetails),$itemtype);
+		$itemdetails->Save();
+		echo $itemdetails;
+	});
+
 	$app->post('/executesqlquery/',function() use ($app) {
 		require_once 'dataobjectserver/application.php';
 		$application = Application::getinstance();

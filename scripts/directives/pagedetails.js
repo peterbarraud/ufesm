@@ -16,6 +16,7 @@ angular.module('ufesmMembersOnlyApp')
         //default mode when the page manager loads, we want the help page to show up
         scope.mode = 'help';
         scope.pagedetails = null;
+        scope.newtag = null;
         scope.ckeditorIsReady = true;
         scope.waiting = false;
         scope.frmpagedetails.$setPristine();
@@ -70,6 +71,60 @@ angular.module('ufesmMembersOnlyApp')
         scope.addchosenpage = function(contentpage){
           scope.pagedetails.pageitem[scope.selectedPageIndex] = contentpage;
         }
+        // story tags
+        scope.opentagsdialog = function() {
+          $('#storyTagsModal').modal('show');
+        }
+
+        scope.openaddnewtagdialog = function() {
+          serverFactory.getitem(-1,'tag',scope,'gotnewtag')
+
+        }
+        scope.gotnewtag = function (data){
+          scope.newtag = data;
+          $('#createTagsModal').modal('show');
+        }
+        scope.savetag = function () {
+          serverFactory.saveitemdetails(scope,scope.newtag,'tag','savedtag')
+        }
+        scope.savedtag = function(data){
+          if (data.ServerErr.indexOf('Duplicate entry') === 0){
+            alert('A tag with this name already exists. Change the name of the tag or click Cancel and then click Open to view the list of available tags.')
+          }
+          else {
+            $('#createTagsModal').modal('hide');
+          }
+        }
+
+        scope.getavailabletaglist = function() {
+          serverFactory.getitems('tag',scope,'openavailableTagsdialog');
+        }
+        scope.openavailableTagsdialog = function(data) {
+          scope.availabletaglist = data.Items;
+          $('#availableTagsModal').modal('show');
+        }
+        scope.assigntagtostory = function(tagid){
+          angular.forEach (scope.availabletaglist,function(availabletag){
+            if (availabletag.id === tagid){
+              scope.pagedetails.tag.push(availabletag);
+            }
+          });
+        }
+        scope.unassigntagtostory = function(tagid) {
+          var selectedIndex = -1;
+          for (var i=0;i<scope.pagedetails.tag.length;i++){
+            var storytag = scope.pagedetails.tag[i];
+            if (tagid === storytag.id){
+              selectedIndex = i;
+              break;
+            }
+          }
+          if (selectedIndex > -1){
+            scope.pagedetails.tag.splice(selectedIndex,1)
+          }
+        }
+
+        // story tags //
 
 
 

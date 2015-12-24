@@ -1,10 +1,11 @@
 <div>
   <div role="group" aria-label="...">
     <button type="button" ng-click='new()'>New</button>
-    <button type="button" ng-disabled='mode!=="edit" && mode!=="new"' ng-click='save()'>Save</button>
-    <button type="button" ng-disabled='mode==="readonly"' ng-click='publish()'>Publish</button>
+    <button type="button" ng-disabled='mode!=="edit" && mode!=="new"' ng-click='save()'>Save <span class="glyphicon glyphicon-floppy-save"></span></button>
+    <button type="button" ng-disabled='mode==="readonly"' ng-click='publish()'>Publish <span class="glyphicon glyphicon-send"></span></button>
     <button type="button" ng-disabled='mode==="readonly"' ng-click='publishall()'>Publish All</button>
     <button type="button" ng-disabled='mode==="readonly"' ng-click='unpublish()'>Unpublish</button>
+    <button type="button" ng-click="opentagsdialog()" title='Assign tags to this story. Then use these tags to link stories together.'>Tags <span class="glyphicon glyphicon-tags"></span></button>
     <span ng-hide='mode==="help"' title="Click here to view the Help page" data-toggle="modal" data-target="#myModal"></span>
   </div>
   <div ng-show='mode==="readonly"'  class="container" style='width:80%;margin-top:10px;'>
@@ -35,7 +36,7 @@
         <label>Title</label>
       </div>
       <div class="form-group">
-        <div class="col-sm-11">
+        <div class="col-sm-12">
           <input type="text" class="form-control" ng-model='pagedetails.title' placeholder="Title of the page">
         </div>
       </div>
@@ -214,5 +215,104 @@
     </div>
   </div>
   <!-- Status modal -->
+<!-- story tags modal -->
+  <div class="modal fade bs-example-modal-sm" id="storyTagsModal"  tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Story tags</h4>
+          Use this dialog to create <button type="button" class="btn btn-default btn-sm">New <span class="glyphicon glyphicon-plus"></span></button> tags that you can then assign to stories.<br/>
+          Click <button type="button" class="btn btn-default btn-sm">Open <span class="glyphicon glyphicon-folder-open"></span></button> to view the complete list of available tags.<br/>
+          If you are working on a story, you will see the tags currently assigned to this story.<br/>
+          <div ng-show="mode === 'edit' || mode === 'new'">
+            If you need assign tags to this story, <button type="button" class="btn btn-default btn-sm">Open <span class="glyphicon glyphicon-folder-open"></span></button> the complete list of tags.<br/>
+            If you want to unassign a tag from a story, click the <span class="glyphicon glyphicon-minus" style='cursor: pointer;color:red'></span> to the right of the tag name.
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default btn-sm" ng-click="openaddnewtagdialog()">New <span class="glyphicon glyphicon-plus"></span></button>
+            <button type="button" class="btn btn-default btn-sm" ng-click="getavailabletaglist()">Open <span class="glyphicon glyphicon-folder-open"></span></button>
+          </div>
+          <div class="row" style="margin-top:5px;">
+            <div class="col-xs-6">
+              <table class="table">
+                <tr ng-repeat="tag in pagedetails.tag">
+                  <td>
+                    <span class="bg-info" style="padding:8px 20px 8px 20px;">{{tag.name}} <span class="glyphicon glyphicon-minus" style='cursor: pointer;color:red' ng-click="unassigntagtostory(tag.id)"></span></span>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  ng-click='save()' data-dismiss="modal" ng-show="mode === 'edit' || mode === 'new'">Save</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" ng-show="mode === 'edit' || mode === 'new'">Cancel</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" ng-show="mode === 'help'">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- story tags modal -->
+
+  <!-- create tags modal -->
+    <div class="modal fade bs-example-modal-sm" id="createTagsModal"  tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add new tag</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="tagname">Tag name</label>
+                <input type="text" class="form-control" id="tagname" placeholder="Name of tag" ng-model='newtag.name'>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" ng-click="savetag()">Save</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- create tags modal -->
+
+  <!-- tag list modal -->
+    <div class="modal fade bs-example-modal-sm" id="availableTagsModal"  tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">List of tags</h4>
+            This is the list of all available tags in the system.<br />
+            If you want to assign some of these tags to stories, either select a story on the left rail or create a new story <br>
+            <div ng-show="mode === 'edit' || mode === 'new'">
+              Click the <span class="glyphicon glyphicon-plus" style='cursor: pointer;'></span></span> next to a tag name to assign the tag to the current story<br/>
+              You can assign as many tags to a story as you want<br/>
+              After you're done assigning the tags, <button type="button" class="btn btn-primary">Close</button> the dialog.
+            </div>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <tr ng-repeat="tag in availabletaglist">
+                <td>
+                  <span class="bg-info" style="padding:8px 20px 8px 20px;">{{tag.name}} <span ng-show="mode === 'edit' || mode === 'new'" class="glyphicon glyphicon-plus" style='cursor: pointer;' ng-click="assigntagtostory(tag.id)"></span></span>
+                  <!-- <span class="bg-info" style="padding:8px 20px 8px 20px;">{{tag.name}} <span class="glyphicon glyphicon-tags"></span></span> -->
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- create tags modal -->
+
 
 </div>

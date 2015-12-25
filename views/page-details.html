@@ -220,10 +220,12 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Story tags</h4>
+          <h3 class="modal-title">Tag manager</h3>
           Use this dialog to create <button type="button" class="btn btn-default btn-sm">New <span class="glyphicon glyphicon-plus"></span></button> tags that you can then assign to stories.<br/>
           Click <button type="button" class="btn btn-default btn-sm">Open <span class="glyphicon glyphicon-folder-open"></span></button> to view the complete list of available tags.<br/>
-          If you are working on a story, you will see the tags currently assigned to this story.<br/>
+          <div ng-hide="mode === 'edit' || mode === 'new'">
+            When you are working on a story, you will see the tags currently assigned to this story.<br/>
+          </div>
           <div ng-show="mode === 'edit' || mode === 'new'">
             If you need assign tags to this story, <button type="button" class="btn btn-default btn-sm">Open <span class="glyphicon glyphicon-folder-open"></span></button> the complete list of tags.<br/>
             If you want to unassign a tag from a story, click the <span class="glyphicon glyphicon-minus" style='cursor: pointer;color:red'></span> to the right of the tag name.
@@ -234,8 +236,9 @@
             <button type="button" class="btn btn-default btn-sm" ng-click="openaddnewtagdialog()">New <span class="glyphicon glyphicon-plus"></span></button>
             <button type="button" class="btn btn-default btn-sm" ng-click="getavailabletaglist()">Open <span class="glyphicon glyphicon-folder-open"></span></button>
           </div>
+          <h4 ng-show="mode === 'edit' || mode === 'new'">List of story tags</h4>
           <div class="row" style="margin-top:5px;">
-            <div class="col-xs-6">
+            <div class="col-xs-6" ng-if="pagedetails.tag.length > 0">
               <table class="table">
                 <tr ng-repeat="tag in pagedetails.tag">
                   <td>
@@ -243,7 +246,10 @@
                   </td>
                 </tr>
               </table>
-
+            </div>
+            <div class="col-xs-12" ng-if="pagedetails.tag.length === 0">
+              The story currently does not have any tags assigned to it.<br>
+              To assign one or more tags to this story, click <button type="button" class="btn btn-default btn-sm">Open <span class="glyphicon glyphicon-folder-open"></span></button> to view the complete list of available tags.<br>
             </div>
 
           </div>
@@ -288,8 +294,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">List of tags</h4>
-            This is the list of all available tags in the system.<br />
-            If you want to assign some of these tags to stories, either select a story on the left rail or create a new story <br>
+            <h5>This is the list of all available tags in the system</h5>
+            <div ng-hide="mode === 'edit' || mode === 'new'">
+              If you want to assign some of these tags to stories, either select a story on the left rail or create a new story
+            </div>
             <div ng-show="mode === 'edit' || mode === 'new'">
               Click the <span class="glyphicon glyphicon-plus" style='cursor: pointer;'></span></span> next to a tag name to assign the tag to the current story<br/>
               You can assign as many tags to a story as you want<br/>
